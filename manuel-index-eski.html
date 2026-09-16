@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sahte Instagram Yorum Üretici — Dark Mode</title>
+<style>
+  :root {
+    --bg: #fff;
+    --text: #111;
+    --muted: #8e8e8e;
+    --accent: #262626;
+    --primary: #0095f6;
+    --comment-bg: linear-gradient(180deg,#fff,#fbfbfb);
+    font-family:
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  Roboto,
+  Helvetica,
+  Arial,
+  sans-serif;
+  }
+
+ [data-theme="dark"] {
+  --bg: #212328;              /* ana arka plan (soft koyu gri) */
+  --text: #f1f1f1;            /* ana yazılar */
+  --muted: #b6b7bb;           /* ikincil yazılar */
+  --accent: #ffffff;
+  --primary: #4aa3ff;
+
+  /* yorum kartları – arka plandan bir tık açık */
+  --comment-bg: linear-gradient(180deg,#23252b,#27292f);
+}
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 24px;
+    box-sizing: border-box;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .app {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--bg);
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+
+  h1 {margin:0 0 12px;font-size:18px;color:var(--accent)}
+  .controls {
+    display:grid;
+    grid-template-columns:1fr 140px;
+    gap:10px;
+    align-items:start;
+    margin-bottom:12px;
+  }
+  .controls .left{display:grid;gap:8px;}
+  label{font-size:13px;color:var(--muted)}
+  input[type="text"], textarea, input[type="number"], select {
+    width:100%;
+    padding:8px;
+    border:1px solid #4444;
+    border-radius:8px;
+    font-size:14px;
+    background:var(--bg);
+    color:var(--text);
+    transition:background 0.3s, color 0.3s, border 0.3s;
+  }
+  textarea{min-height:72px;resize:vertical}
+  .row{display:flex;gap:8px;align-items:center}
+  button{
+    background:var(--primary);
+    color:#fff;
+    padding:8px 12px;
+    border:0;
+    border-radius:8px;
+    cursor:pointer;
+    transition:background 0.3s;
+  }
+  button.secondary{
+    background:#fff;
+    color:var(--primary);
+    border:1px solid #e6e6e6;
+  }
+  [data-theme="dark"] button.secondary{
+    background:#1c1c1c;
+    border:1px solid #333;
+    color:var(--primary);
+  }
+
+  .previewTitle{font-weight:600;margin:12px 0 8px}
+  .comments{display:flex;flex-direction:column;gap:10px}
+
+  /* instagram-like comment */
+  .comment{
+    display:flex;
+    gap:12px;
+    padding:10px;
+    border-radius:8px;
+    background:var(--comment-bg);
+    align-items:flex-start;
+    transition:background 0.3s;
+  }
+  .avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#ddd;
+    flex:0 0 42px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    color:#fff;
+  }
+  .c-body{flex:1}
+  .c-top{display:flex;align-items:center;gap:8px}
+  .username{font-weight:700;color:var(--accent);font-size:14px}
+  .badge{font-size:12px;color:var(--muted);margin-left:6px}
+  .text{margin:6px 0 4px;color:var(--text);line-height:1.3}
+  .meta{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center}
+  .meta .likes{font-weight:600;color:var(--muted)}
+  .reply{color:var(--muted);cursor:pointer; font-weight:600;}
+  .controlsSmall{display:flex;gap:8px;margin-top:6px}
+  .small{font-size:13px;color:var(--muted)}
+  .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .help{font-size:13px;color:var(--muted);margin-top:8px}
+  .footer{margin-top:12px;font-size:13px;color:var(--muted)}
+  input[type=file]{display:none}
+
+  .theme-toggle {
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:12px;
+  }
+</style>
+</head>
+<body data-theme="light">
+  <div class="app">
+    <div class="theme-toggle">
+      <button id="themeBtn" class="secondary">🌙 Karanlık Moda Geç</button>
+    </div>
+
+    <h1>Sahte Instagram Yorum Üretici — Demo (etik kullanım için)</h1>
+
+    <div class="controls">
+      <div class="left">
+        <div>
+          <label>Kullanıcı adı</label>
+          <input id="username" type="text" placeholder="merve_kocer92" value="merve_kocer92" />
+        </div>
+        <div>
+          <label>Yorum metni</label>
+          <textarea id="commentText" placeholder="Bence iki taraf da şüpheli 😮‍💨😂">Bence iki taraf da şüpheli 😮‍💨😂</textarea>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1">
+            <label>Beğeni sayısı</label>
+            <input id="likes" type="number" min="0" value="161" />
+          </div>
+          <div style="width:140px">
+            <label>Zaman</label>
+            <input id="time" type="text" value="1h" />
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;gap:8px;align-content:start;">
+        <label>Avatar</label>
+        <div class="row">
+          <div id="avatarPreview" class="avatar">MK</div>
+          <div style="flex:1">
+            <button id="uploadBtn" class="secondary">Avatar yükle</button>
+            <input id="avatarFile" type="file" accept="image/*" />
+          </div>
+        </div>
+
+        <div style="margin-top:8px">
+          <label>Stil</label>
+          <select id="styleSelect">
+            <option value="default">Standart</option>
+            <option value="compact">Küçük / compact</option>
+          </select>
+        </div>
+
+        <div class="controlsSmall">
+          <button id="genBtn">Yorum Oluştur</button>
+          <button id="clearBtn" class="secondary">Tümünü Temizle</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="previewTitle">Önizleme</div>
+    <div class="comments" id="comments"></div>
+
+    <div class="tools" style="margin-top:12px">
+      <button id="exportHTML" class="secondary">HTML Kopyala</button>
+      <button id="exportPNG">PNG İndir</button>
+    </div>
+
+    <div class="help">Kullanım: birden fazla yorum üretip tasarım/test için kullanabilirsiniz. Yasal/etik kullanım için.</div>
+    <div class="footer">Demo — sadece prototip amaçlı</div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+  const usernameEl = document.getElementById('username');
+  const commentTextEl = document.getElementById('commentText');
+  const likesEl = document.getElementById('likes');
+  const timeEl = document.getElementById('time');
+  const genBtn = document.getElementById('genBtn');
+  const commentsEl = document.getElementById('comments');
+  const avatarFile = document.getElementById('avatarFile');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const avatarPreview = document.getElementById('avatarPreview');
+  const exportHTML = document.getElementById('exportHTML');
+  const exportPNG = document.getElementById('exportPNG');
+  const clearBtn = document.getElementById('clearBtn');
+  const styleSelect = document.getElementById('styleSelect');
+  const themeBtn = document.getElementById('themeBtn');
+  const body = document.body;
+
+  let currentAvatarDataUrl = null;
+
+  function initialsFrom(name){
+    const parts = (name || '').split(/[_\s]/).filter(Boolean);
+    if(parts.length===0) return '';
+    if(parts.length===1) return parts[0].slice(0,2).toUpperCase();
+    return (parts[0][0] + (parts[1][0]||'')).toUpperCase();
+  }
+
+  /* noktalı onluk sayı formatı için */
+  function formatLikes(num) {
+  return num.toLocaleString('tr-TR');
+}
+
+
+  function createComment({username, text, likes, time, avatarDataUrl, style}){
+    const wrap = document.createElement('div');
+    wrap.className = 'comment ' + (style === 'compact' ? 'compact' : '');
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar';
+    if(avatarDataUrl){
+      const img = document.createElement('img');
+      img.src = avatarDataUrl;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      avatar.appendChild(img);
+    } else {
+      avatar.textContent = initialsFrom(username);
+      avatar.style.background = '#9b59b6';
+    }
+
+    const body = document.createElement('div');
+    body.className = 'c-body';
+
+    const top = document.createElement('div');
+    top.className = 'c-top';
+    const uname = document.createElement('div');
+    uname.className = 'username';
+    uname.textContent = username;
+    const badge = document.createElement('div');
+    badge.className = 'badge';
+    top.appendChild(uname);
+    top.appendChild(badge);
+
+    const textEl = document.createElement('div');
+    textEl.className = 'text';
+    textEl.textContent = text;
+
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    const timeElLocal = document.createElement('div');
+    timeElLocal.className = 'small';
+    timeElLocal.textContent = time;
+    const likesLocal = document.createElement('div');
+    likesLocal.className = 'likes';
+    likesLocal.textContent =likes > 0 ? formatLikes(likes) + ' beğenme' : '';
+    const reply = document.createElement('div');
+    reply.className = 'reply';
+    reply.textContent = 'Yanıtla';
+
+    meta.appendChild(timeElLocal);
+    meta.appendChild(likesLocal);
+    meta.appendChild(reply);
+
+    body.appendChild(top);
+    body.appendChild(textEl);
+    body.appendChild(meta);
+
+    wrap.appendChild(avatar);
+    wrap.appendChild(body);
+
+    wrap.addEventListener('contextmenu', (e)=>{
+      e.preventDefault();
+      if(confirm('Bu yorumu silmek istiyor musunuz?')) wrap.remove();
+    });
+
+    return wrap;
+  }
+
+  uploadBtn.addEventListener('click', ()=> avatarFile.click());
+  avatarFile.addEventListener('change', (ev)=>{
+    const f = ev.target.files[0];
+    if(!f) return;
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+      currentAvatarDataUrl = e.target.result;
+      avatarPreview.style.background = 'transparent';
+      avatarPreview.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = currentAvatarDataUrl;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      avatarPreview.appendChild(img);
+    };
+    reader.readAsDataURL(f);
+  });
+
+  genBtn.addEventListener('click', ()=>{
+    const cfg = {
+      username: usernameEl.value.trim() || 'kullanici',
+      text: commentTextEl.value.trim() || '—',
+      likes: parseInt(likesEl.value||'0',10) || 0,
+      time: timeEl.value.trim() || '1h',
+      avatarDataUrl: currentAvatarDataUrl,
+      style: styleSelect.value || 'default'
+    };
+    const commentNode = createComment(cfg);
+    commentsEl.prepend(commentNode);
+  });
+
+  clearBtn.addEventListener('click', ()=> {
+    if(confirm('Tüm yorumları temizlemek istiyor musunuz?')) commentsEl.innerHTML = '';
+  });
+
+  exportHTML.addEventListener('click', ()=>{
+    const html = commentsEl.innerHTML;
+    navigator.clipboard.writeText(html).then(()=>{
+      alert('HTML panoya kopyalandı.');
+    });
+  });
+
+  exportPNG.addEventListener('click', ()=>{
+    if(commentsEl.children.length === 0){
+      alert('İndirmek için en az bir yorum oluşturun.');
+      return;
+    }
+    const node = commentsEl.firstElementChild;
+    html2canvas(node, {scale:2}).then(canvas=>{
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'yorum.png';
+      a.click();
+    });
+  });
+
+  // Tema geçişi
+  themeBtn.addEventListener('click', ()=>{
+    const current = body.getAttribute('data-theme');
+    if(current === 'light'){
+      body.setAttribute('data-theme', 'dark');
+      themeBtn.textContent = '🌞 Açık Moda Geç';
+    } else {
+      body.setAttribute('data-theme', 'light');
+      themeBtn.textContent = '🌙 Karanlık Moda Geç';
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', ()=> genBtn.click());
+</script>
+</body>
+</html>
